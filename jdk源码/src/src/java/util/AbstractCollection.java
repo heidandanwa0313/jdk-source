@@ -65,7 +65,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
      *
      * <p>This implementation returns <tt>size() == 0</tt>.
      */
-    public boolean isEmpty() {
+    public boolean isEmpty() {			//判断集合是否为空
 	return size() == 0;
     }
 
@@ -78,7 +78,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
      * @throws ClassCastException   {@inheritDoc}
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean contains(Object o) {
+    public boolean contains(Object o) {		//判断集合中是否包含对象o
 	Iterator<E> e = iterator();
 	if (o==null) {
 	    while (e.hasNext())
@@ -114,7 +114,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
      * return list.toArray();
      * }</pre>
      */
-    public Object[] toArray() {
+    public Object[] toArray() {			//将集合对象转换成对象数组
         // Estimate size of array; be prepared to see more or fewer elements
 	Object[] r = new Object[size()];
         Iterator<E> it = iterator();
@@ -185,7 +185,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
      * @return array containing the elements in the given array, plus any
      *         further elements returned by the iterator, trimmed to size
      */
-    private static <T> T[] finishToArray(T[] r, Iterator<?> it) {
+    private static <T> T[] finishToArray(T[] r, Iterator<?> it) {		//将超出期望的元素写入数组中
 	     int i = r.length;
         while (it.hasNext()) {
             int cap = r.length;
