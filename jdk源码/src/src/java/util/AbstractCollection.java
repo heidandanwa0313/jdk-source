@@ -274,7 +274,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
      * @throws NullPointerException          {@inheritDoc}
      * @see #contains(Object)
      */
-    public boolean containsAll(Collection<?> c) {
+    public boolean containsAll(Collection<?> c) {		//判断是否集合C是不是该集合对象的子集
 	Iterator<?> e = c.iterator();
 	while (e.hasNext())
 	    if (!contains(e.next()))
@@ -300,7 +300,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
      *
      * @see #add(Object)
      */
-    public boolean addAll(Collection<? extends E> c) {
+    public boolean addAll(Collection<? extends E> c) {			//将集合C添加进集合对象中
 	boolean modified = false;
 	Iterator<? extends E> e = c.iterator();
 	while (e.hasNext()) {
@@ -331,7 +331,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
      * @see #remove(Object)
      * @see #contains(Object)
      */
-    public boolean removeAll(Collection<?> c) {
+    public boolean removeAll(Collection<?> c) {			//删除集合对象中和集合C相同的元素==求交集
 	boolean modified = false;
 	Iterator<?> e = iterator();
 	while (e.hasNext()) {
@@ -364,7 +364,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
      * @see #remove(Object)
      * @see #contains(Object)
      */
-    public boolean retainAll(Collection<?> c) {       //去除集合c中该对象的元素
+    public boolean retainAll(Collection<?> c) {       //去除和集合c中元素相同的元素==求补集
 	boolean modified = false;
 	Iterator<E> e = iterator();
 	while (e.hasNext()) {
@@ -391,7 +391,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
      *
      * @throws UnsupportedOperationException {@inheritDoc}
      */
-    public void clear() {
+    public void clear() {			//删除集合对象中的所有元素
 	Iterator<E> e = iterator();
 	while (e.hasNext()) {
 	    e.next();
@@ -417,7 +417,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
 	if (! i.hasNext())
 	    return "[]";
 
-	StringBuilder sb = new StringBuilder();
+	StringBuilder sb = new StringBuilder();			//将集合对象中的元素保存在StringBuilder中，最后转换为String
 	sb.append('[');
 	for (;;) {
 	    E e = i.next();
