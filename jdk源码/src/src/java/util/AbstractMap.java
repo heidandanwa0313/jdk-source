@@ -48,12 +48,12 @@ import java.util.Map.Entry;
  * @since 1.2
  */
 
-public abstract class AbstractMap<K,V> implements Map<K,V> {
+public abstract class AbstractMap<K,V> implements Map<K,V> {		//实现Map接口
     /**
      * Sole constructor.  (For invocation by subclass constructors, typically
      * implicit.)
      */
-    protected AbstractMap() {
+    protected AbstractMap() {		//构造方法
     }
 
     // Query Operations
@@ -63,7 +63,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
      *
      * <p>This implementation returns <tt>entrySet().size()</tt>.
      */
-    public int size() {
+    public int size() {		//返回Mao大小
 	return entrySet().size();
     }
 
@@ -72,7 +72,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
      *
      * <p>This implementation returns <tt>size() == 0</tt>.
      */
-    public boolean isEmpty() {
+    public boolean isEmpty() {		//判断Map是否为空
 	return size() == 0;
     }
 
@@ -88,8 +88,8 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
      * @throws ClassCastException   {@inheritDoc}
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean containsValue(Object value) {
-	Iterator<Entry<K,V>> i = entrySet().iterator();
+    public boolean containsValue(Object value) {	//判断mao中是否包含值为value的元素
+	Iterator<Entry<K,V>> i = entrySet().iterator();		//生成迭代器
 	if (value==null) {
 	    while (i.hasNext()) {
 		Entry<K,V> e = i.next();
@@ -119,7 +119,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
      * @throws ClassCastException   {@inheritDoc}
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean containsKey(Object key) {
+    public boolean containsKey(Object key) {	//返回该Map中是否包含Key
 	Iterator<Map.Entry<K,V>> i = entrySet().iterator();
 	if (key==null) {
 	    while (i.hasNext()) {
@@ -150,7 +150,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
      * @throws ClassCastException            {@inheritDoc}
      * @throws NullPointerException          {@inheritDoc}
      */
-    public V get(Object key) {
+    public V get(Object key) {		//获取该key对应的value
 	Iterator<Entry<K,V>> i = entrySet().iterator();
 	if (key==null) {
 	    while (i.hasNext()) {
@@ -182,7 +182,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
      * @throws NullPointerException          {@inheritDoc}
      * @throws IllegalArgumentException      {@inheritDoc}
      */
-    public V put(K key, V value) {
+    public V put(K key, V value) {		//Map中添加相应的记录
 	throw new UnsupportedOperationException();
     }
 
@@ -207,9 +207,9 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
      * @throws ClassCastException            {@inheritDoc}
      * @throws NullPointerException          {@inheritDoc}
      */
-    public V remove(Object key) {
+    public V remove(Object key) {		//移除Key为key的Entry记录
 	Iterator<Entry<K,V>> i = entrySet().iterator();
-	Entry<K,V> correctEntry = null;
+	Entry<K,V> correctEntry = null;		//记录和保存要删除的元素
 	if (key==null) {
 	    while (correctEntry==null && i.hasNext()) {
 		Entry<K,V> e = i.next();
@@ -225,9 +225,9 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
 	}
 
 	V oldValue = null;
-	if (correctEntry !=null) {
+	if (correctEntry !=null) {		//i迭代到要删除的元素索引处
 	    oldValue = correctEntry.getValue();
-	    i.remove();
+	    i.remove();			//调用iterator中的移除方法
 	}
 	return oldValue;
     }
@@ -279,6 +279,10 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
      * appropriate view the first time this view is requested.  The views are
      * stateless, so there's no reason to create more than one of each.
      */
+     //这个类的有些属性需要序列化，而其他属性不需要被序列化，打个比方，如果一个
+     //用户有一些敏感信息（如密码，银行卡号等），为了安全起见，不希望在网络操作
+     //（主要涉及到序列化操作，本地序列化缓存也适用）中被传输，这些信息对应的变量就
+     //可以加上transient关键字。换句话说，这个字段的生命周期仅存于调用者的内存中而不会写到磁盘里持久化。
     transient volatile Set<K>        keySet = null;
     transient volatile Collection<V> values = null;
 
@@ -367,7 +371,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
                 }
 
 		public int size() {
-		    return AbstractMap.this.size();
+		    return AbstractMap.this.size();		//调用AbstractMap的size()方法
 		}
 
 		public boolean contains(Object v) {
@@ -420,10 +424,10 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
                 Entry<K,V> e = i.next();
 		K key = e.getKey();
                 V value = e.getValue();
-                if (value == null) {
+                if (value == null) {		//判断是否包含key，如包含，则判断key是否为空
                     if (!(m.get(key)==null && m.containsKey(key)))
                         return false;
-                } else {
+                } else {		//比较两个对象中的value值
                     if (!value.equals(m.get(key)))
                         return false;
                 }
@@ -458,7 +462,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
 	int h = 0;
 	Iterator<Entry<K,V>> i = entrySet().iterator();
 	while (i.hasNext())
-	    h += i.next().hashCode();
+	    h += i.next().hashCode();		//使用每个Entry的hashcode值构成整个Map的hashcode值
 	return h;
     }
 
@@ -485,7 +489,10 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
 	    Entry<K,V> e = i.next();
 	    K key = e.getKey();
 	    V value = e.getValue();
-	    sb.append(key   == this ? "(this Map)" : key);
+	    sb.append(key   == this ? "(this Map)" : key);		//key==this不是很理解
+	    //在Java中，this通常指当前对象，super则指父类的。当您想要引用当前对象的某种东西，比如当前对象的某个方法，
+	    //或当前对象的某个成员，您便可以利用this来实现这个目的，当然，this的另一个用途是调用当前对象的另一个构造函数，
+	    //这些马上就要讨论。如果您想引用父类的某种东西，则非super莫属。
 	    sb.append('=');
 	    sb.append(value == this ? "(this Map)" : value);
 	    if (! i.hasNext())
@@ -500,7 +507,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
      *
      * @return a shallow copy of this map
      */
-    protected Object clone() throws CloneNotSupportedException {
+    protected Object clone() throws CloneNotSupportedException {	//新建一个map的副本实例，但是key和value则不被复制
         AbstractMap<K,V> result = (AbstractMap<K,V>)super.clone();
         result.keySet = null;
         result.values = null;
@@ -511,7 +518,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
      * Utility method for SimpleEntry and SimpleImmutableEntry.
      * Test for equality, checking for nulls.
      */
-    private static boolean eq(Object o1, Object o2) {
+    private static boolean eq(Object o1, Object o2) {		//判断map中的两个对象是否相同
         return o1 == null ? o2 == null : o1.equals(o2);
     }
 
@@ -534,7 +541,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
      * @since 1.6
      */
     public static class SimpleEntry<K,V>
-	implements Entry<K,V>, java.io.Serializable
+	implements Entry<K,V>, java.io.Serializable		//简化Enrty的类
     {
 	private static final long serialVersionUID = -8499721149061103585L;
 
@@ -636,7 +643,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
 	 * @return the hash code value for this map entry
 	 * @see    #equals
 	 */
-	public int hashCode() {
+	public int hashCode() {		//对于每个entry来说，求hashcode时使用key和value
 	    return (key   == null ? 0 :   key.hashCode()) ^
 		   (value == null ? 0 : value.hashCode());
 	}
@@ -664,7 +671,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
      * @since 1.6
      */
     public static class SimpleImmutableEntry<K,V>
-	implements Entry<K,V>, java.io.Serializable
+	implements Entry<K,V>, java.io.Serializable	//单一不变的Enrty,该类不支持value的改写，相对比较安全
     {
 	private static final long serialVersionUID = 7138329143949025153L;
 
