@@ -1,0 +1,1 @@
+1、java.util.AbstractMap.java文件的492行：key==this，这种用法不是很理解。
