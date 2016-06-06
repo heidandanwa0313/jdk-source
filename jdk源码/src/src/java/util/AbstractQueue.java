@@ -65,7 +65,7 @@ public abstract class AbstractQueue<E>
      *         prevents it from being added to this queue
      */
     public boolean add(E e) {
-        if (offer(e))
+        if (offer(e))           //该方法在Queue.java文件中定义，给队列中添加元素，当使用数量确定的队列时，则比add()方法高效
             return true;
         else
             throw new IllegalStateException("Queue full");
@@ -82,8 +82,8 @@ public abstract class AbstractQueue<E>
      * @return the head of this queue
      * @throws NoSuchElementException if this queue is empty
      */
-    public E remove() {
-        E x = poll();
+    public E remove() {     //检索和删除队头元素，当队列为空时，则报异常NoSuchElementException
+        E x = poll();       //检索和删除队头元素，当队列为空时，则返回null
         if (x != null)
             return x;
         else
@@ -101,8 +101,8 @@ public abstract class AbstractQueue<E>
      * @return the head of this queue
      * @throws NoSuchElementException if this queue is empty
      */
-    public E element() {
-        E x = peek();
+    public E element() {        //检索队列的头元素，但不删除。当队列为空时，则报异常NoSuchElementException
+        E x = peek();           //检索队列的头元素，但不删除。当队列为空时，则返回null
         if (x != null)
             return x;
         else
@@ -117,7 +117,7 @@ public abstract class AbstractQueue<E>
      * returns <tt>null</tt>.
      */
     public void clear() {
-        while (poll() != null)
+        while (poll() != null)          //当poll()方法返回null时，则表示队列为空
             ;
     }
 
@@ -153,7 +153,7 @@ public abstract class AbstractQueue<E>
     public boolean addAll(Collection<? extends E> c) {
         if (c == null)
             throw new NullPointerException();
-        if (c == this)
+        if (c == this)          //当要添加的集合就是当前集合时，则报异常
             throw new IllegalArgumentException();
         boolean modified = false;
         Iterator<? extends E> e = c.iterator();
@@ -163,5 +163,4 @@ public abstract class AbstractQueue<E>
         }
         return modified;
     }
-
 }
