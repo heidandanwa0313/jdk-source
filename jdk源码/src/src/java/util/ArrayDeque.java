@@ -53,7 +53,7 @@ import java.io.*;
  * @since   1.6
  * @param <E> the type of elements held in this collection
  */
-public class ArrayDeque<E> extends AbstractCollection<E>
+public class ArrayDeque<E> extends AbstractCollection<E>		//基于数组的双向队列
                            implements Deque<E>, Cloneable, Serializable
 {
     /**
@@ -94,7 +94,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      *
      * @param numElements  the number of elements to hold
      */
-    private void allocateElements(int numElements) {
+    private void allocateElements(int numElements) {		//初始化队列数组
         int initialCapacity = MIN_INITIAL_CAPACITY;
         // Find the best power of two to hold elements.
         // Tests "<=" because arrays aren't kept full.
@@ -117,7 +117,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * Double the capacity of this deque.  Call only when full, i.e.,
      * when head and tail have wrapped around to become equal.
      */
-    private void doubleCapacity() {
+    private void doubleCapacity() {		//扩容，当队列满了的时候被调用
         assert head == tail;
         int p = head;
         int n = elements.length;
@@ -126,8 +126,8 @@ public class ArrayDeque<E> extends AbstractCollection<E>
         if (newCapacity < 0)
             throw new IllegalStateException("Sorry, deque too big");
         Object[] a = new Object[newCapacity];
-        System.arraycopy(elements, p, a, 0, r);
-        System.arraycopy(elements, 0, a, r, p);
+        System.arraycopy(elements, p, a, 0, r);		//把队列中的元素添加进数组
+        System.arraycopy(elements, 0, a, r, p);		//把队列数组中的其他元素也添加进数组，针对于双向队列
         elements = (E[])a;
         head = 0;
         tail = n;
@@ -140,13 +140,13 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      *
      * @return its argument
      */
-    private <T> T[] copyElements(T[] a) {
+    private <T> T[] copyElements(T[] a) {		//将队列元素添加进数组a中
         if (head < tail) {
             System.arraycopy(elements, head, a, 0, size());
         } else if (head > tail) {
             int headPortionLen = elements.length - head;
             System.arraycopy(elements, head, a, 0, headPortionLen);
-            System.arraycopy(elements, 0, a, headPortionLen, tail);
+            System.arraycopy(elements, 0, a, headPortionLen, tail);	//双向队列的特征
         }
         return a;
     }
@@ -155,7 +155,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * Constructs an empty array deque with an initial capacity
      * sufficient to hold 16 elements.
      */
-    public ArrayDeque() {
+    public ArrayDeque() {			//构造方法
         elements = (E[]) new Object[16];
     }
 
@@ -165,7 +165,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      *
      * @param numElements  lower bound on initial capacity of the deque
      */
-    public ArrayDeque(int numElements) {
+    public ArrayDeque(int numElements) {		//构造方法
         allocateElements(numElements);
     }
 
@@ -179,9 +179,9 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @param c the collection whose elements are to be placed into the deque
      * @throws NullPointerException if the specified collection is null
      */
-    public ArrayDeque(Collection<? extends E> c) {
+    public ArrayDeque(Collection<? extends E> c) {		//构造方法
         allocateElements(c.size());
-        addAll(c);
+        addAll(c);		//将c中元素全部添加进队列
     }
 
     // The main insertion and extraction methods are addFirst,
@@ -194,12 +194,12 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @param e the element to add
      * @throws NullPointerException if the specified element is null
      */
-    public void addFirst(E e) {
+    public void addFirst(E e) {		//在队头添加元素
         if (e == null)
             throw new NullPointerException();
-        elements[head = (head - 1) & (elements.length - 1)] = e;
+        elements[head = (head - 1) & (elements.length - 1)] = e;	//(head - 1) & (elements.length - 1)，防止下标越界或不合法法
         if (head == tail)
-            doubleCapacity();
+            doubleCapacity();		//队列已满，则需要进行扩容
     }
 
     /**
@@ -210,11 +210,11 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @param e the element to add
      * @throws NullPointerException if the specified element is null
      */
-    public void addLast(E e) {
+    public void addLast(E e) {			//在队尾添加元素
         if (e == null)
             throw new NullPointerException();
         elements[tail] = e;
-        if ( (tail = (tail + 1) & (elements.length - 1)) == head)
+        if ( (tail = (tail + 1) & (elements.length - 1)) == head)		//(tail + 1) & (elements.length - 1)
             doubleCapacity();
     }
 
@@ -225,7 +225,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return <tt>true</tt> (as specified by {@link Deque#offerFirst})
      * @throws NullPointerException if the specified element is null
      */
-    public boolean offerFirst(E e) {
+    public boolean offerFirst(E e) {		//插入元素
         addFirst(e);
         return true;
     }
@@ -245,7 +245,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
     /**
      * @throws NoSuchElementException {@inheritDoc}
      */
-    public E removeFirst() {
+    public E removeFirst() {			//移除元素
         E x = pollFirst();
         if (x == null)
             throw new NoSuchElementException();
@@ -267,7 +267,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
         E result = elements[h]; // Element is null if deque empty
         if (result == null)
             return null;
-        elements[h] = null;     // Must null out slot
+        elements[h] = null;     // Must null out slot	//将队头元素设为null
         head = (h + 1) & (elements.length - 1);
         return result;
     }
@@ -285,7 +285,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
     /**
      * @throws NoSuchElementException {@inheritDoc}
      */
-    public E getFirst() {
+    public E getFirst() {		//获取队头或队尾元素
         E x = elements[head];
         if (x == null)
             throw new NoSuchElementException();
@@ -322,7 +322,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @param o element to be removed from this deque, if present
      * @return <tt>true</tt> if the deque contained the specified element
      */
-    public boolean removeFirstOccurrence(Object o) {
+    public boolean removeFirstOccurrence(Object o) {	 //删除第一个与对象o相同的元素
         if (o == null)
             return false;
         int mask = elements.length - 1;
@@ -333,7 +333,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
                 delete(i);
                 return true;
             }
-            i = (i + 1) & mask;
+            i = (i + 1) & mask;		//防止超出队列索引限制
         }
         return false;
     }
@@ -350,7 +350,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @param o element to be removed from this deque, if present
      * @return <tt>true</tt> if the deque contained the specified element
      */
-    public boolean removeLastOccurrence(Object o) {
+    public boolean removeLastOccurrence(Object o) {	//Removes the last occurrence of the specified element in this queue
         if (o == null)
             return false;
         int mask = elements.length - 1;
@@ -377,7 +377,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return <tt>true</tt> (as specified by {@link Collection#add})
      * @throws NullPointerException if the specified element is null
      */
-    public boolean add(E e) {
+    public boolean add(E e) {		//在队尾插入
         addLast(e);
         return true;
     }
@@ -391,7 +391,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return <tt>true</tt> (as specified by {@link Queue#offer})
      * @throws NullPointerException if the specified element is null
      */
-    public boolean offer(E e) {
+    public boolean offer(E e) {		//在队尾插入
         return offerLast(e);
     }
 
@@ -406,7 +406,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return the head of the queue represented by this deque
      * @throws NoSuchElementException {@inheritDoc}
      */
-    public E remove() {
+    public E remove() {		//移除队头元素，如果为空抛出异常
         return removeFirst();
     }
 
@@ -420,7 +420,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return the head of the queue represented by this deque, or
      *         <tt>null</tt> if this deque is empty
      */
-    public E poll() {
+    public E poll() {		//移除队头元素，如果为空返回null
         return pollFirst();
     }
 
@@ -434,7 +434,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return the head of the queue represented by this deque
      * @throws NoSuchElementException {@inheritDoc}
      */
-    public E element() {
+    public E element() {		//获取队头元素，为空则抛出异常
         return getFirst();
     }
 
@@ -447,7 +447,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return the head of the queue represented by this deque, or
      *         <tt>null</tt> if this deque is empty
      */
-    public E peek() {
+    public E peek() {		//获取队头元素，为空则返回null
         return peekFirst();
     }
 
@@ -462,7 +462,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @param e the element to push
      * @throws NullPointerException if the specified element is null
      */
-    public void push(E e) {
+    public void push(E e) {		
         addFirst(e);
     }
 
@@ -480,7 +480,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
         return removeFirst();
     }
 
-    private void checkInvariants() {
+    private void checkInvariants() {		//检测tail和head是否合法
 	assert elements[tail] == null;
 	assert head == tail ? elements[head] == null :
 	    (elements[head] != null &&
@@ -591,7 +591,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
          */
         private int lastRet = -1;
 
-        public boolean hasNext() {
+        public boolean hasNext() {		//队头等于队尾，则表示队列为空
             return cursor != fence;
         }
 
@@ -612,7 +612,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
             if (lastRet < 0)
                 throw new IllegalStateException();
             if (delete(lastRet)) { // if left-shifted, undo increment in next()
-                cursor = (cursor - 1) & (elements.length - 1);
+                cursor = (cursor - 1) & (elements.length - 1);	//？？？
 		fence = tail;
 	    }
             lastRet = -1;
@@ -796,7 +796,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
     }
 
     /**
-     * Appease the serialization gods.
+     * Appease the serialization gods.		//序列化输入输出来初始化队列
      */
     private static final long serialVersionUID = 2340985798034038923L;
 
