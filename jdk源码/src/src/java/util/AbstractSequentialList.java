@@ -66,9 +66,9 @@ public abstract class AbstractSequentialList<E> extends AbstractList<E> {
      *
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
-    public E get(int index) {
+    public E get(int index) {		//获取index索引的list元素
         try {
-            return listIterator(index).next();
+            return listIterator(index).next();		//调用AbstractList中的方法
         } catch (NoSuchElementException exc) {
             throw new IndexOutOfBoundsException("Index: "+index);
         }
@@ -93,12 +93,12 @@ public abstract class AbstractSequentialList<E> extends AbstractList<E> {
      * @throws IllegalArgumentException      {@inheritDoc}
      * @throws IndexOutOfBoundsException     {@inheritDoc}
      */
-    public E set(int index, E element) {
+    public E set(int index, E element) {	//修改list中的元素
 	try {
 	    ListIterator<E> e = listIterator(index);
-	    E oldVal = e.next();
-	    e.set(element);
-	    return oldVal;
+	    E oldVal = e.next();	//保存当前index对应的元素
+	    e.set(element);		//调用set方法
+	    return oldVal;		//返回旧的数据
 	} catch (NoSuchElementException exc) {
 	    throw new IndexOutOfBoundsException("Index: "+index);
 	}
@@ -124,7 +124,9 @@ public abstract class AbstractSequentialList<E> extends AbstractList<E> {
      * @throws IllegalArgumentException      {@inheritDoc}
      * @throws IndexOutOfBoundsException     {@inheritDoc}
      */
-    public void add(int index, E element) {
+    public void add(int index, E element) {		//在特定位置添加元素，其余元素向后移动。在调用的源头文件中，应首先判断index
+    							//是否已经存在元素，如果已经存在，则需将index之后的元素向后移动一次。如果大于
+    							//size则直接插入即可
 	try {
 	    listIterator(index).add(element);
 	} catch (NoSuchElementException exc) {
@@ -149,7 +151,7 @@ public abstract class AbstractSequentialList<E> extends AbstractList<E> {
      * @throws UnsupportedOperationException {@inheritDoc}
      * @throws IndexOutOfBoundsException     {@inheritDoc}
      */
-    public E remove(int index) {
+    public E remove(int index) {		//移除index位置的元素
 	try {
 	    ListIterator<E> e = listIterator(index);
 	    E outCast = e.next();
@@ -192,7 +194,7 @@ public abstract class AbstractSequentialList<E> extends AbstractList<E> {
      * @throws IllegalArgumentException      {@inheritDoc}
      * @throws IndexOutOfBoundsException     {@inheritDoc}
      */
-    public boolean addAll(int index, Collection<? extends E> c) {
+    public boolean addAll(int index, Collection<? extends E> c) {	//将集合C添加到以index开头存放的集合对象中
 	try {
 	    boolean modified = false;
 	    ListIterator<E> e1 = listIterator(index);
@@ -218,7 +220,7 @@ public abstract class AbstractSequentialList<E> extends AbstractList<E> {
      *
      * @return an iterator over the elements in this list (in proper sequence)
      */
-    public Iterator<E> iterator() {
+    public Iterator<E> iterator() {	//该方法返回listIterator迭代器
         return listIterator();
     }
 
@@ -232,5 +234,5 @@ public abstract class AbstractSequentialList<E> extends AbstractList<E> {
      *         sequence)
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
-    public abstract ListIterator<E> listIterator(int index);
+    public abstract ListIterator<E> listIterator(int index);	//声明了返回ListIterator对象的抽象方法
 }
