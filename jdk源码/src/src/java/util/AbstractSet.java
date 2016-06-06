@@ -68,14 +68,13 @@ public abstract class AbstractSet<E> extends AbstractCollection<E> implements Se
     public boolean equals(Object o) {
 	if (o == this)
 	    return true;
-
 	if (!(o instanceof Set))
 	    return false;
 	Collection c = (Collection) o;
 	if (c.size() != size())
 	    return false;
         try {
-            return containsAll(c);
+            return containsAll(c);	//判断集合C是否是该Set对象的子集，该方法在Set.java中声明
         } catch (ClassCastException unused)   {
             return false;
         } catch (NullPointerException unused) {
@@ -100,7 +99,7 @@ public abstract class AbstractSet<E> extends AbstractCollection<E> implements Se
      * @see Object#equals(Object)
      * @see Set#equals(Object)
      */
-    public int hashCode() {
+    public int hashCode() {		//计算hashcode码，对象中的每个set元素都参与
 	int h = 0;
 	Iterator<E> i = iterator();
 	while (i.hasNext()) {
@@ -146,7 +145,7 @@ public abstract class AbstractSet<E> extends AbstractCollection<E> implements Se
      * @see #remove(Object)
      * @see #contains(Object)
      */
-    public boolean removeAll(Collection<?> c) {
+    public boolean removeAll(Collection<?> c) {			//移除该集合对象中包含C的元素
         boolean modified = false;
 
         if (size() > c.size()) {
