@@ -53,7 +53,7 @@ public class Arrays {
      *
      * @param a the array to be sorted
      */
-    public static void sort(long[] a) {
+    public static void sort(long[] a) {		//排序
 	sort1(a, 0, a.length);
     }
 
@@ -374,7 +374,7 @@ public class Arrays {
 	sort2(a, fromIndex, toIndex);
     }
 
-    private static void sort2(double a[], int fromIndex, int toIndex) {
+    private static void sort2(double a[], int fromIndex, int toIndex) {	
         final long NEG_ZERO_BITS = Double.doubleToLongBits(-0.0d);
         /*
          * The sort is done in three phases to avoid the expense of using
@@ -382,13 +382,13 @@ public class Arrays {
          */
 
         /*
-         * Preprocessing phase:  Move any NaN's to end of array, count the
+         * Preprocessing phase:  Move any NaN's to end of array, count the		//NaN value表示not a number
          * number of -0.0's, and turn them into 0.0's.
          */
         int numNegZeros = 0;
         int i = fromIndex, n = toIndex;
         while(i < n) {
-            if (a[i] != a[i]) {
+            if (a[i] != a[i]) {			//不是数字的话，则使用逻辑表达式会比较地址或引用之类的
 		double swap = a[i];
                 a[i] = a[--n];
                 a[n] = swap;
@@ -406,13 +406,13 @@ public class Arrays {
 
         // Postprocessing phase: change 0.0's to -0.0's as required
         if (numNegZeros != 0) {
-            int j = binarySearch0(a, fromIndex, n, 0.0d); // posn of ANY zero
+            int j = binarySearch0(a, fromIndex, n, 0.0d); // posn of ANY zero		//二分法查找0.0的起始位置
             do {
                 j--;
             } while (j>=0 && a[j]==0.0d);
 
             // j is now one less than the index of the FIRST zero
-            for (int k=0; k<numNegZeros; k++)
+            for (int k=0; k<numNegZeros; k++)		//从找到的位置开始，将之后的元素全部设置为-0.0
                 a[++j] = -0.0d;
         }
     }
@@ -470,7 +470,7 @@ public class Arrays {
     /**
      * Sorts the specified sub-array of longs into ascending order.
      */
-    private static void sort1(long x[], int off, int len) {
+    private static void sort1(long x[], int off, int len) {		//小数组中实现插入排序
 	// Insertion sort on smallest arrays
 	if (len < 7) {
 	    for (int i=off; i<len+off; i++)
@@ -479,7 +479,7 @@ public class Arrays {
 	    return;
 	}
 
-	// Choose a partition element, v
+	// Choose a partition element, v		//挑选一个划分元素
 	int m = off + (len >> 1);       // Small arrays, middle element
 	if (len > 7) {
 	    int l = off;
@@ -536,7 +536,7 @@ public class Arrays {
     /**
      * Swaps x[a .. (a+n-1)] with x[b .. (b+n-1)].
      */
-    private static void vecswap(long x[], int a, int b, int n) {
+    private static void vecswap(long x[], int a, int b, int n) {	//交换数组中的n个元素
 	for (int i=0; i<n; i++, a++, b++)
 	    swap(x, a, b);
     }
@@ -544,14 +544,14 @@ public class Arrays {
     /**
      * Returns the index of the median of the three indexed longs.
      */
-    private static int med3(long x[], int a, int b, int c) {
+    private static int med3(long x[], int a, int b, int c) {			//返回三个数的中位数
 	return (x[a] < x[b] ?
 		(x[b] < x[c] ? b : x[a] < x[c] ? c : a) :
 		(x[b] > x[c] ? b : x[a] > x[c] ? c : a));
     }
 
     /**
-     * Sorts the specified sub-array of integers into ascending order.
+     * Sorts the specified sub-array of integers into ascending order.		//将数组的的子数组按照递增的原则排序
      */
     private static void sort1(int x[], int off, int len) {
 	// Insertion sort on smallest arrays
@@ -1130,7 +1130,7 @@ public class Arrays {
      * high is the end index in dest to end sorting
      * off is the offset to generate corresponding low, high in src
      */
-    private static void mergeSort(Object[] src,
+    private static void mergeSort(Object[] src,		//合并排序
 				  Object[] dest,
 				  int low,
 				  int high,
