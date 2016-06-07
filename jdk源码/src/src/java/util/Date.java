@@ -110,7 +110,7 @@ import sun.util.calendar.ZoneInfo;
  * @since   JDK1.0
  */
 public class Date
-    implements java.io.Serializable, Cloneable, Comparable<Date>
+    implements java.io.Serializable, Cloneable, Comparable<Date>		//日期类
 {
     private static final BaseCalendar gcal =
 				CalendarSystem.getGregorianCalendar();
