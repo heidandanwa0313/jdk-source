@@ -78,7 +78,7 @@ package java.util;
  * @since 1.2
  */
 
-public interface Comparator<T> {
+public interface Comparator<T> {            //定义了compare和equal方法，实现该接口的必须实现此两种方法
     /**
      * Compares its two arguments for order.  Returns a negative integer,
      * zero, or a positive integer as the first argument is less than, equal
