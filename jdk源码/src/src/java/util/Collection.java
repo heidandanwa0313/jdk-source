@@ -104,7 +104,7 @@ package java.util;
  * @since 1.2
  */
 
-public interface Collection<E> extends Iterable<E> {
+public interface Collection<E> extends Iterable<E> {        //定义了Collection接口的方法
     // Query Operations
 
     /**
