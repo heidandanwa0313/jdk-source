@@ -288,7 +288,7 @@ import sun.util.resources.LocaleData;
  * @author Mark Davis, David Goldsmith, Chen-Lieh Huang, Alan Liu
  * @since JDK1.1
  */
-public abstract class Calendar implements Serializable, Cloneable, Comparable<Calendar> {
+public abstract class Calendar implements Serializable, Cloneable, Comparable<Calendar> {	//计算时间
 
     // Data flow in Calendar
     // ---------------------
