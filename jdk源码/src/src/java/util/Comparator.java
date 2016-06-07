@@ -78,7 +78,7 @@ package java.util;
  * @since 1.2
  */
 
-public interface Comparator<T> {
+public interface Comparator<T> {        //比较元素大小的接口，实现该接口的方法compare和equal
     /**
      * Compares its two arguments for order.  Returns a negative integer,
      * zero, or a positive integer as the first argument is less than, equal
