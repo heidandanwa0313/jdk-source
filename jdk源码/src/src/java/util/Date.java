@@ -142,7 +142,7 @@ public class Date
      *
      * @see     java.lang.System#currentTimeMillis()
      */
-    public Date() {
+    public Date() {		//调用系统时间
         this(System.currentTimeMillis());
     }
 
