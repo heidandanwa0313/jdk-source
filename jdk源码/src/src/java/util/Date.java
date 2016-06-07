@@ -143,7 +143,7 @@ public class Date
      * @see     java.lang.System#currentTimeMillis()
      */
     public Date() {
-        this(System.currentTimeMillis());
+        this(System.currentTimeMillis());		//返回当前时间，单位毫秒
     }
 
     /**
@@ -174,7 +174,7 @@ public class Date
      * or <code>GregorianCalendar(year + 1900, month, date)</code>.
      */
     @Deprecated
-    public Date(int year, int month, int date) {
+    public Date(int year, int month, int date) {		//设置时间
         this(year, month, date, 0, 0, 0);
     }
 
@@ -432,7 +432,7 @@ public class Date
      * replaced by <code>DateFormat.parse(String s)</code>.
      */
     @Deprecated
-    public static long parse(String s) {
+    public static long parse(String s) {		//将一个字符串转换为日期
         int year = Integer.MIN_VALUE;
         int mon = -1;
         int mday = -1;
@@ -648,7 +648,7 @@ public class Date
      * replaced by <code>Calendar.set(Calendar.YEAR, year + 1900)</code>.
      */
     @Deprecated
-    public void setYear(int year) {
+    public void setYear(int year) {		
 	getCalendarDate().setNormalizedYear(year + 1900);
     }
 
@@ -908,7 +908,7 @@ public class Date
      *          <code>false</code> otherwise.
      * @exception NullPointerException if <code>when</code> is null.
      */
-    public boolean after(Date when) {
+    public boolean after(Date when) {	//比较时间前后次序
         return getMillisOf(this) > getMillisOf(when);
     }
 
