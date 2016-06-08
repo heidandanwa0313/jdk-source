@@ -46,6 +46,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * a long, which consists of 64 bits, requiring 6 address bits.
      * The choice of word size is determined purely by performance concerns.
      */
+     //该类中默认一个字为long类型，包含64位，要求6个地址位
     private final static int ADDRESS_BITS_PER_WORD = 6;
     private final static int BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD;
     private final static int BIT_INDEX_MASK = BITS_PER_WORD - 1;
@@ -72,13 +73,13 @@ public class BitSet implements Cloneable, java.io.Serializable {
     /**
      * The number of words in the logical size of this BitSet.
      */
-    private transient int wordsInUse = 0;
+    private transient int wordsInUse = 0;	//bitset的逻辑大小
 
     /**
      * Whether the size of "words" is user-specified.  If so, we assume
      * the user knows what he's doing and try harder to preserve it.
      */
-    private transient boolean sizeIsSticky = false;
+    private transient boolean sizeIsSticky = false;		//set是否被用户指定的标志
 
     /* use serialVersionUID from JDK 1.0.2 for interoperability */
     private static final long serialVersionUID = 7997698588986878753L;
@@ -86,13 +87,14 @@ public class BitSet implements Cloneable, java.io.Serializable {
     /**
      * Given a bit index, return word index containing it.
      */
-    private static int wordIndex(int bitIndex) {
+    private static int wordIndex(int bitIndex) {		//给定一个bitindex，返回一个wordindex
         return bitIndex >> ADDRESS_BITS_PER_WORD;
     }
 
     /**
-     * Every public method must preserve these invariants.
+     * Every public method must preserve these invariants.	、//每个公共方法必须保留这些不变量
      */
+     //检查内部状态，判断wordsInuse是否合法
     private void checkInvariants() {
 	assert(wordsInUse == 0 || words[wordsInUse - 1] != 0);
 	assert(wordsInUse >= 0 && wordsInUse <= words.length);
@@ -104,7 +106,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * set.  WARNING:This method assumes that the number of words actually
      * in use is less than or equal to the current value of wordsInUse!
      */
-    private void recalculateWordsInUse() {
+    private void recalculateWordsInUse() {		//重新计算word使用数量
         // Traverse the bitset until a used word is found
         int i;
         for (i = wordsInUse-1; i >= 0; i--)
@@ -114,10 +116,14 @@ public class BitSet implements Cloneable, java.io.Serializable {
         wordsInUse = i+1; // The new logical size
     }
 
+
+   //以下为两种构造方法，一种指定了初始大小，一种未指定
+   //默认大小为long，大小为64bit
+   //针对于指定大小的构造函数，系统会自动将大小规整到一个大于或者等于这个数字的64的整数倍
     /**
      * Creates a new bit set. All bits are initially <code>false</code>.
      */
-    public BitSet() {
+    public BitSet() {		
 	initWords(BITS_PER_WORD);
 	sizeIsSticky = false;
     }
@@ -148,7 +154,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * Ensures that the BitSet can hold enough words.
      * @param wordsRequired the minimum acceptable number of words.
      */
-    private void ensureCapacity(int wordsRequired) {
+    private void ensureCapacity(int wordsRequired) {		//增加bitset容量，提高为两倍的容量
 	if (words.length < wordsRequired) {
 	    // Allocate larger of doubled size or required size
 	    int request = Math.max(2 * words.length, wordsRequired);
@@ -164,7 +170,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * possibly using recalculateWordsInUse().
      * @param	wordIndex the index to be accommodated.
      */
-    private void expandTo(int wordIndex) {
+    private void expandTo(int wordIndex) {		//扩容到指定大小
 	int wordsRequired = wordIndex+1;
 	if (wordsInUse < wordsRequired) {
 	    ensureCapacity(wordsRequired);
@@ -193,14 +199,14 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * @exception IndexOutOfBoundsException if the specified index is negative.
      * @since   1.4
      */
-    public void flip(int bitIndex) {
+    public void flip(int bitIndex) {			//反转某一个指定位
 	if (bitIndex < 0)
 	    throw new IndexOutOfBoundsException("bitIndex < 0: " + bitIndex);
 
-	int wordIndex = wordIndex(bitIndex);
+	int wordIndex = wordIndex(bitIndex);	//反转的第一步：找到对应的long
 	expandTo(wordIndex);
 
-	words[wordIndex] ^= (1L << bitIndex);
+	words[wordIndex] ^= (1L << bitIndex);	//获取mask并与指定的位进行异或操作
 
 	recalculateWordsInUse();
 	checkInvariants();
@@ -218,7 +224,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *            larger than <tt>toIndex</tt>.
      * @since   1.4
      */
-    public void flip(int fromIndex, int toIndex) {
+    public void flip(int fromIndex, int toIndex) {	//对于指定区间进行反转
 	checkRange(fromIndex, toIndex);
 
 	if (fromIndex == toIndex)
@@ -257,14 +263,14 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * @exception IndexOutOfBoundsException if the specified index is negative.
      * @since     JDK1.0
      */
-    public void set(int bitIndex) {
+    public void set(int bitIndex) {		//设置某一指定位
 	if (bitIndex < 0)
 	    throw new IndexOutOfBoundsException("bitIndex < 0: " + bitIndex);
 
         int wordIndex = wordIndex(bitIndex);
 	expandTo(wordIndex);
 
-	words[wordIndex] |= (1L << bitIndex); // Restores invariants
+	words[wordIndex] |= (1L << bitIndex); // Restores invariants  执行与1进行或运算
 
 	checkInvariants();
     }
@@ -295,7 +301,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *            larger than <tt>toIndex</tt>.
      * @since     1.4
      */
-    public void set(int fromIndex, int toIndex) {
+    public void set(int fromIndex, int toIndex) {		//类似于区间反转，逐个进行设置
 	checkRange(fromIndex, toIndex);
 
 	if (fromIndex == toIndex)
@@ -353,7 +359,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * @exception IndexOutOfBoundsException if the specified index is negative.
      * @since     JDK1.0
      */
-    public void clear(int bitIndex) {
+    public void clear(int bitIndex) {		//将指定位清0
 	if (bitIndex < 0)
 	    throw new IndexOutOfBoundsException("bitIndex < 0: " + bitIndex);
 
@@ -361,7 +367,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
 	if (wordIndex >= wordsInUse)
 	    return;
 
-	words[wordIndex] &= ~(1L << bitIndex);
+	words[wordIndex] &= ~(1L << bitIndex);	
 
 	recalculateWordsInUse();
 	checkInvariants();
@@ -378,7 +384,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *            larger than <tt>toIndex</tt>.
      * @since     1.4
      */
-    public void clear(int fromIndex, int toIndex) {
+    public void clear(int fromIndex, int toIndex) {		//将指定区间清0
 	checkRange(fromIndex, toIndex);
 
 	if (fromIndex == toIndex)
@@ -421,7 +427,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *
      * @since   1.4
      */
-    public void clear() {
+    public void clear() {		//全部清0
         while (wordsInUse > 0)
             words[--wordsInUse] = 0;
     }
@@ -436,7 +442,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * @return    the value of the bit with the specified index.
      * @exception IndexOutOfBoundsException if the specified index is negative.
      */
-    public boolean get(int bitIndex) {
+    public boolean get(int bitIndex) {		//返回bitindex的数据
 	if (bitIndex < 0)
 	    throw new IndexOutOfBoundsException("bitIndex < 0: " + bitIndex);
 
@@ -459,7 +465,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *            larger than <tt>toIndex</tt>.
      * @since   1.4
      */
-    public BitSet get(int fromIndex, int toIndex) {
+    public BitSet get(int fromIndex, int toIndex) {	//获取区间数据，并保存在新的bitset中，并返回
 	checkRange(fromIndex, toIndex);
 
 	checkInvariants();
@@ -521,7 +527,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * @throws  IndexOutOfBoundsException if the specified index is negative.
      * @since   1.4
      */
-    public int nextSetBit(int fromIndex) {
+    public int nextSetBit(int fromIndex) {		//返回从fromindex开始，返回第一个被设置为1的索引
 	if (fromIndex < 0)
 	    throw new IndexOutOfBoundsException("fromIndex < 0: " + fromIndex);
 
@@ -611,9 +617,9 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *          the specified <code>BitSet</code>.
      * @since   1.4
      */
-    public boolean intersects(BitSet set) {
+    public boolean intersects(BitSet set) {	//对比两个set
         for (int i = Math.min(wordsInUse, set.wordsInUse) - 1; i >= 0; i--)
-            if ((words[i] & set.words[i]) != 0)
+            if ((words[i] & set.words[i]) != 0)	
                 return true;
         return false;
     }
@@ -626,7 +632,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *          <code>BitSet</code>.
      * @since   1.4
      */
-    public int cardinality() {
+    public int cardinality() {		//返回bitset中1的个数
         int sum = 0;
         for (int i = 0; i < wordsInUse; i++)
             sum += Long.bitCount(words[i]);
@@ -642,7 +648,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *
      * @param   set   a bit set.
      */
-    public void and(BitSet set) {
+    public void and(BitSet set) {		//两个set求与操作
 	if (this == set)
 	    return;
 
@@ -666,7 +672,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *
      * @param   set   a bit set.
      */
-    public void or(BitSet set) {
+    public void or(BitSet set) {		//或操作
 	if (this == set)
 	    return;
 
@@ -705,7 +711,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *
      * @param   set   a bit set.
      */
-    public void xor(BitSet set) {
+    public void xor(BitSet set) {		//异或操作
         int wordsInCommon = Math.min(wordsInUse, set.wordsInUse);
 
         if (wordsInUse < set.wordsInUse) {
@@ -735,7 +741,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *            <code>BitSet</code>.
      * @since     1.2
      */
-    public void andNot(BitSet set) {
+    public void andNot(BitSet set) {	//非操作
 	// Perform logical (a & !b) on words in common
         for (int i = Math.min(wordsInUse, set.wordsInUse) - 1; i >= 0; i--)
 	    words[i] &= ~set.words[i];
@@ -770,7 +776,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *
      * @return  a hash code value for this bit set.
      */
-    public int hashCode() {
+    public int hashCode() {		//计算hashcode
 	long h = 1234;
 	for (int i = wordsInUse; --i >= 0; )
             h ^= words[i] * (i + 1);
@@ -785,7 +791,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *
      * @return  the number of bits currently in this bit set.
      */
-    public int size() {
+    public int size() {		//返回当前set中的位
 	return words.length * BITS_PER_WORD;
     }
 
@@ -856,7 +862,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * Calling this method may, but is not required to, affect the value
      * returned by a subsequent call to the {@link #size()} method.
      */
-    private void trimToSize() {
+    private void trimToSize() {		//将set大小设置为真正使用的大小
 	if (wordsInUse != words.length) {
             words = Arrays.copyOf(words, wordsInUse);
 	    checkInvariants();
@@ -922,7 +928,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      *
      * @return  a string representation of this bit set.
      */
-    public String toString() {
+    public String toString() {		//返回该set的字符串
 	checkInvariants();
 
 	int numBits = (wordsInUse > 128) ?
