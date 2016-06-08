@@ -49,7 +49,7 @@ package java.util;
  * @see	    AbstractList
  * @since   1.2
  */
-public class ConcurrentModificationException extends RuntimeException {			//并发修改异常
+public class ConcurrentModificationException extends RuntimeException {			//并发修改异常，抛出异常
     /**
      * Constructs a ConcurrentModificationException with no
      * detail message.
