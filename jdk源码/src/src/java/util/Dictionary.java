@@ -30,7 +30,7 @@ package java.util;
  * @since   JDK1.0
  */
 public abstract
-class Dictionary<K,V> {
+class Dictionary<K,V> {         //字典方法声明，由子类对其中的方法进行实现
     /**
      * Sole constructor.  (For invocation by subclass constructors, typically
      * implicit.)
