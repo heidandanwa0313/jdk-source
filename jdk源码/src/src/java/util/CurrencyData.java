@@ -1,6 +1,6 @@
 package java.util;
 
-class CurrencyData {
+class CurrencyData {        //没看懂
 
     static final String version = "140";
 
