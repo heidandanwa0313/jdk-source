@@ -72,14 +72,14 @@ public class Collections {
      * (The first word of each tuning parameter name is the algorithm to which
      * it applies.)
      */
-    private static final int BINARYSEARCH_THRESHOLD   = 5000;
-    private static final int REVERSE_THRESHOLD        =   18;
-    private static final int SHUFFLE_THRESHOLD        =    5;
-    private static final int FILL_THRESHOLD           =   25;
-    private static final int ROTATE_THRESHOLD         =  100;
-    private static final int COPY_THRESHOLD           =   10;
-    private static final int REPLACEALL_THRESHOLD     =   11;
-    private static final int INDEXOFSUBLIST_THRESHOLD =   35;
+    private static final int BINARYSEARCH_THRESHOLD   = 5000;		//二分查找阈值
+    private static final int REVERSE_THRESHOLD        =   18;		//反向阈值
+    private static final int SHUFFLE_THRESHOLD        =    5;		//洗牌阈值
+    private static final int FILL_THRESHOLD           =   25;		//填充阈值
+    private static final int ROTATE_THRESHOLD         =  100;		//旋转阈值
+    private static final int COPY_THRESHOLD           =   10;		//拷贝阈值
+    private static final int REPLACEALL_THRESHOLD     =   11;		//替换阈值
+    private static final int INDEXOFSUBLIST_THRESHOLD =   35;		//子集合索引阈值
 
     /**
      * Sorts the specified list into ascending order, according to the
@@ -113,9 +113,9 @@ public class Collections {
      * @see Comparable
      */
     public static <T extends Comparable<? super T>> void sort(List<T> list) {
-	Object[] a = list.toArray();
-	Arrays.sort(a);
-	ListIterator<T> i = list.listIterator();
+	Object[] a = list.toArray();		//转为数组
+	Arrays.sort(a);				//排序	其中调用插入排序
+	ListIterator<T> i = list.listIterator();//迭代器
 	for (int j=0; j<a.length; j++) {
 	    i.next();
 	    i.set((T)a[j]);
@@ -156,7 +156,7 @@ public class Collections {
      */
     public static <T> void sort(List<T> list, Comparator<? super T> c) {
 	Object[] a = list.toArray();
-	Arrays.sort(a, (Comparator)c);
+	Arrays.sort(a, (Comparator)c);				//其中调用合并排序
 	ListIterator i = list.listIterator();
 	for (int j=0; j<a.length; j++) {
 	    i.next();
@@ -196,7 +196,7 @@ public class Collections {
      *	       with the elements of the list.
      */
     public static <T>
-    int binarySearch(List<? extends Comparable<? super T>> list, T key) {
+    int binarySearch(List<? extends Comparable<? super T>> list, T key) {	//二分查找
         if (list instanceof RandomAccess || list.size()<BINARYSEARCH_THRESHOLD)
             return Collections.indexedBinarySearch(list, key);
         else
@@ -225,7 +225,7 @@ public class Collections {
     }
 
     private static <T>
-    int iteratorBinarySearch(List<? extends Comparable<? super T>> list, T key)
+    int iteratorBinarySearch(List<? extends Comparable<? super T>> list, T key)		//使用迭代实现二分查找
     {
 	int low = 0;
 	int high = list.size()-1;
@@ -360,9 +360,9 @@ public class Collections {
      * @throws UnsupportedOperationException if the specified list or
      *         its list-iterator does not support the <tt>set</tt> operation.
      */
-    public static void reverse(List<?> list) {
+    public static void reverse(List<?> list) {		//list反转
         int size = list.size();
-        if (size < REVERSE_THRESHOLD || list instanceof RandomAccess) {
+        if (size < REVERSE_THRESHOLD || list instanceof RandomAccess) {		//list支持随机访问
             for (int i=0, mid=size>>1, j=size-1; i<mid; i++, j--)
                 swap(list, i, j);
         } else {
@@ -404,7 +404,7 @@ public class Collections {
      * @throws UnsupportedOperationException if the specified list or
      *         its list-iterator does not support the <tt>set</tt> operation.
      */
-    public static void shuffle(List<?> list) {
+    public static void shuffle(List<?> list) {		//随机调整
         if (r == null) {
             r = new Random();
         }
@@ -469,7 +469,7 @@ public class Collections {
      *         || j &lt; 0 || j &gt;= list.size()).
      * @since 1.4
      */
-    public static void swap(List<?> list, int i, int j) {
+    public static void swap(List<?> list, int i, int j) {		//元素交换方法 
 	final List l = list;
 	l.set(i, l.set(j, l.get(i)));
     }
@@ -494,7 +494,7 @@ public class Collections {
      * @throws UnsupportedOperationException if the specified list or its
      *	       list-iterator does not support the <tt>set</tt> operation.
      */
-    public static <T> void fill(List<? super T> list, T obj) {
+    public static <T> void fill(List<? super T> list, T obj) {		//用一个元素置换list中所有元素
         int size = list.size();
 
         if (size < FILL_THRESHOLD || list instanceof RandomAccess) {
@@ -565,7 +565,7 @@ public class Collections {
      * @throws NoSuchElementException if the collection is empty.
      * @see Comparable
      */
-    public static <T extends Object & Comparable<? super T>> T min(Collection<? extends T> coll) {
+    public static <T extends Object & Comparable<? super T>> T min(Collection<? extends T> coll) {		//找出最小的元素
 	Iterator<? extends T> i = coll.iterator();
 	T candidate = i.next();
 
@@ -862,7 +862,7 @@ public class Collections {
      *         is no such occurrence.
      * @since  1.4
      */
-    public static int indexOfSubList(List<?> source, List<?> target) {
+    public static int indexOfSubList(List<?> source, List<?> target) {		//查找list的子集
         int sourceSize = source.size();
         int targetSize = target.size();
         int maxCandidate = sourceSize - targetSize;
@@ -976,7 +976,7 @@ public class Collections {
      *	       returned.
      * @return an unmodifiable view of the specified collection.
      */
-    public static <T> Collection<T> unmodifiableCollection(Collection<? extends T> c) {
+    public static <T> Collection<T> unmodifiableCollection(Collection<? extends T> c) {		//不可修改集合
 	return new UnmodifiableCollection<T>(c);
     }
 
@@ -1051,7 +1051,7 @@ public class Collections {
      * @param  s the set for which an unmodifiable view is to be returned.
      * @return an unmodifiable view of the specified set.
      */
-    public static <T> Set<T> unmodifiableSet(Set<? extends T> s) {
+    public static <T> Set<T> unmodifiableSet(Set<? extends T> s) {		//不可修改Set
 	return new UnmodifiableSet<T>(s);
     }
 
@@ -1083,7 +1083,7 @@ public class Collections {
      *        returned.
      * @return an unmodifiable view of the specified sorted set.
      */
-    public static <T> SortedSet<T> unmodifiableSortedSet(SortedSet<T> s) {
+    public static <T> SortedSet<T> unmodifiableSortedSet(SortedSet<T> s) {		//不可修改sortedSet
 	return new UnmodifiableSortedSet<T>(s);
     }
 
@@ -1129,7 +1129,7 @@ public class Collections {
      * @param  list the list for which an unmodifiable view is to be returned.
      * @return an unmodifiable view of the specified list.
      */
-    public static <T> List<T> unmodifiableList(List<? extends T> list) {
+    public static <T> List<T> unmodifiableList(List<? extends T> list) {	//不可修改List
 	return (list instanceof RandomAccess ?
                 new UnmodifiableRandomAccessList<T>(list) :
                 new UnmodifiableList<T>(list));
@@ -1207,7 +1207,7 @@ public class Collections {
          * serialized in 1.4.1 and deserialized in 1.4 will become
          * UnmodifiableList instances, as this method was missing in 1.4.
          */
-        private Object readResolve() {
+        private Object readResolve() {		//该方法确保有效获得实例
             return (list instanceof RandomAccess
 		    ? new UnmodifiableRandomAccessList<E>(list)
 		    : this);
@@ -1535,7 +1535,7 @@ public class Collections {
     /**
      * @serial include
      */
-    static class SynchronizedCollection<E> implements Collection<E>, Serializable {
+    static class SynchronizedCollection<E> implements Collection<E>, Serializable {		//同步集合
 	// use serialVersionUID from JDK 1.2.2 for interoperability
 	private static final long serialVersionUID = 3053995032091335093L;
 
@@ -2191,7 +2191,7 @@ public class Collections {
     /**
      * @serial include
      */
-    static class CheckedCollection<E> implements Collection<E>, Serializable {
+    static class CheckedCollection<E> implements Collection<E>, Serializable {		//检测对象是否合法
         private static final long serialVersionUID = 1578914078182001775L;
 
         final Collection<E> c;
@@ -3053,7 +3053,7 @@ public class Collections {
     /**
      * @serial include
      */
-    private static class SingletonSet<E>
+    private static class SingletonSet<E>		//单例Set
 	extends AbstractSet<E>
 	implements Serializable
     {
@@ -3377,7 +3377,7 @@ public class Collections {
      * @return an enumeration over the specified collection.
      * @see Enumeration
      */
-    public static <T> Enumeration<T> enumeration(final Collection<T> c) {
+    public static <T> Enumeration<T> enumeration(final Collection<T> c) {		//枚举
 	return new Enumeration<T>() {
 	    Iterator<T> i = c.iterator();
 
@@ -3469,7 +3469,7 @@ public class Collections {
      * @throws NullPointerException if either collection is null
      * @since 1.5
      */
-    public static boolean disjoint(Collection<?> c1, Collection<?> c2) {
+    public static boolean disjoint(Collection<?> c1, Collection<?> c2) {		//两个集合是否存在交集
         /*
          * We're going to iterate through c1 and test for inclusion in c2.
          * If c1 is a Set and c2 isn't, swap the collections.  Otherwise,
