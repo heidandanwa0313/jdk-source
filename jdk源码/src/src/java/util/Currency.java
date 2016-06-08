@@ -29,7 +29,7 @@ import sun.util.resources.LocaleData;
  *
  * @since 1.4
  */
-public final class Currency implements Serializable {
+public final class Currency implements Serializable {	// Represents a currency. Currencies are identified by their ISO 4217 currency codes.
 
     private static final long serialVersionUID = -158308464356906721L;
     
