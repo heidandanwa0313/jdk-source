@@ -18,7 +18,7 @@ package java.util;
  * @version 	1.3, 11/17/05
  * @since 1.5
  */
-public class DuplicateFormatFlagsException extends IllegalFormatException {
+public class DuplicateFormatFlagsException extends IllegalFormatException {		//重复格式标志异常类，设置标志位
 
     private static final long serialVersionUID = 18890531L;
 
