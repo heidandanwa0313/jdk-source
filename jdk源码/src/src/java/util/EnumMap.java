@@ -91,7 +91,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V>
      */
     private static final Object NULL = new Object();
 
-    private Object maskNull(Object value) {
+    private Object maskNull(Object value) {		//分辨非空值
         return (value == null ? NULL : value);
     }
 
