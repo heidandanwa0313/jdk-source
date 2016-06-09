@@ -17,7 +17,7 @@ package java.util;
  * @since   JDK1.0
  */
 public
-class EmptyStackException extends RuntimeException {
+class EmptyStackException extends RuntimeException {            //空栈异常
     /**
      * Constructs a new <code>EmptyStackException</code> with <tt>null</tt> 
      * as its error message string.
