@@ -218,7 +218,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V>
      */
     public V get(Object key) {
         return (isValidKey(key) ?
-                unmaskNull(vals[((Enum)key).ordinal()]) : null);
+                unmaskNull(vals[((Enum)key).ordinal()]) : null);		//访问vakue使用vals[((Enum)key).ordinal()]
     }
 
     // Modification Operations
@@ -240,9 +240,9 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V>
     public V put(K key, V value) {
         typeCheck(key);
 
-        int index = ((Enum)key).ordinal();
-        Object oldValue = vals[index];
-        vals[index] = maskNull(value);
+        int index = ((Enum)key).ordinal();		//获取该key的索引
+        Object oldValue = vals[index];			//获取旧值
+        vals[index] = maskNull(value);			//masknull返回object，而unmasknull则返回V
         if (oldValue == null)
             size++;
         return unmaskNull(oldValue);
@@ -284,13 +284,13 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V>
      * Returns true if key is of the proper type to be a key in this
      * enum map.
      */
-    private boolean isValidKey(Object key) {
+    private boolean isValidKey(Object key) {			//判断key是否有效
         if (key == null)
             return false;
 
         // Cheaper than instanceof Enum followed by getDeclaringClass
         Class keyClass = key.getClass();
-        return keyClass == keyType || keyClass.getSuperclass() == keyType;
+        return keyClass == keyType || keyClass.getSuperclass() == keyType;	//key的类型是否是规定类型，或者规定类型的父类
     }
 
     // Bulk Operations
@@ -330,7 +330,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V>
     /**
      * Removes all mappings from this map.
      */
-    public void clear() {
+    public void clear() {		//将所有value置空
         Arrays.fill(vals, null);
         size = 0;
     }
