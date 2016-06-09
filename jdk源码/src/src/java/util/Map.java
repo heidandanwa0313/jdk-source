@@ -97,7 +97,7 @@ package java.util;
  * @see Set
  * @since 1.2
  */
-public interface Map<K,V> {
+public interface Map<K,V> {		//定义了Map的方法
     // Query Operations
 
     /**
