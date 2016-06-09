@@ -124,7 +124,7 @@ public class HashMap<K,V>
     /**
      * The load factor used when none specified in constructor.
      */
-    static final float DEFAULT_LOAD_FACTOR = 0.75f;
+    static final float DEFAULT_LOAD_FACTOR = 0.75f;		//当大小不够用时的装载因子，用于增加容量，装载因子乘以容量则为阈值
 
     /**
      * The table, resized as necessary. Length MUST Always be a power of two.
@@ -140,7 +140,7 @@ public class HashMap<K,V>
      * The next size value at which to resize (capacity * load factor).
      * @serial
      */
-    int threshold;
+    int threshold;		//resize的阈值
 
     /**
      * The load factor for the hash table.
@@ -167,7 +167,7 @@ public class HashMap<K,V>
      * @throws IllegalArgumentException if the initial capacity is negative
      *         or the load factor is nonpositive
      */
-    public HashMap(int initialCapacity, float loadFactor) {
+    public HashMap(int initialCapacity, float loadFactor) {		//构造方法
         if (initialCapacity < 0)
             throw new IllegalArgumentException("Illegal initial capacity: " +
                                                initialCapacity);
@@ -315,7 +315,7 @@ public class HashMap<K,V>
      * operations (get and put), but incorporated with conditionals in
      * others.
      */
-    private V getForNullKey() {
+    private V getForNullKey() {		//获得key为空值的value
         for (Entry<K,V> e = table[0]; e != null; e = e.next) {
             if (e.key == null)
                 return e.value;
@@ -376,7 +376,7 @@ public class HashMap<K,V>
             if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
                 V oldValue = e.value;
                 e.value = value;
-                e.recordAccess(this);
+                e.recordAccess(this);		//？？
                 return oldValue;
             }
         }
@@ -411,7 +411,7 @@ public class HashMap<K,V>
      */
     private void putForCreate(K key, V value) {
         int hash = (key == null) ? 0 : hash(key.hashCode());
-        int i = indexFor(hash, table.length);
+        int i = indexFor(hash, table.length);		//indexfor返回key所在的位置
 
         /**
          * Look for preexisting entry for key.  This will never happen for
@@ -460,7 +460,7 @@ public class HashMap<K,V>
         }
 
         Entry[] newTable = new Entry[newCapacity];
-        transfer(newTable);
+        transfer(newTable);		//Transfers all entries from current table to newTable.
         table = newTable;
         threshold = (int)(newCapacity * loadFactor);
     }
