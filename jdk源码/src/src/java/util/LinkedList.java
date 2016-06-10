@@ -73,7 +73,7 @@ package java.util;
 
 public class LinkedList<E>
     extends AbstractSequentialList<E>
-    implements List<E>, Deque<E>, Cloneable, java.io.Serializable
+    implements List<E>, Deque<E>, Cloneable, java.io.Serializable		//双向循环链表实现
 {
     private transient Entry<E> header = new Entry<E>(null, null, null);
     private transient int size = 0;
@@ -364,7 +364,7 @@ public class LinkedList<E>
         if (index < 0 || index >= size)
             throw new IndexOutOfBoundsException("Index: "+index+
                                                 ", Size: "+size);
-        Entry<E> e = header;
+        Entry<E> e = header;			//分成左右两部分进行查找，加快速率
         if (index < (size >> 1)) {
             for (int i = 0; i <= index; i++)
                 e = e.next;
@@ -436,14 +436,14 @@ public class LinkedList<E>
         return -1;
     }
 
-    // Queue operations.
+    // Queue operations.		队列操作
 
     /**
      * Retrieves, but does not remove, the head (first element) of this list.
      * @return the head of this list, or <tt>null</tt> if this list is empty
      * @since 1.5
      */
-    public E peek() {
+    public E peek() {			//获取第一个元素
         if (size==0)
             return null;
         return getFirst();
