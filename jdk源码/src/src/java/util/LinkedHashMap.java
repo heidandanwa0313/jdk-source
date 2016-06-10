@@ -130,7 +130,7 @@ import java.io.*;
 public class LinkedHashMap<K,V>
     extends HashMap<K,V>
     implements Map<K,V>
-{
+{				//继承HashMap，实现Map接口
 
     private static final long serialVersionUID = 3801124242820219131L;
 
