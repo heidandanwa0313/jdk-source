@@ -28,7 +28,7 @@ package java.util;
  * @see Enumeration
  * @since 1.2
  */
-public interface Iterator<E> {
+public interface Iterator<E> {          //实现迭代的接口，其中包含next()、hasnext（）、remove()等方法
     /**
      * Returns <tt>true</tt> if the iteration has more elements. (In other
      * words, returns <tt>true</tt> if <tt>next</tt> would return an element
