@@ -365,7 +365,7 @@ public class Hashtable<K,V>
 		old = old.next;
 
 		int index = (e.hash & 0x7FFFFFFF) % newCapacity;
-		e.next = newMap[index];
+		e.next = newMap[index];		//当entry所在index中包含的元素只有一个时，则使用该语句
 		newMap[index] = e;
 	    }
 	}
@@ -581,7 +581,7 @@ public class Hashtable<K,V>
      */
     public Set<K> keySet() {
 	if (keySet == null)
-	    keySet = Collections.synchronizedSet(new KeySet(), this);
+	    keySet = Collections.synchronizedSet(new KeySet(), this);		//调用collection的方法
 	return keySet;
     }
 
@@ -785,7 +785,7 @@ public class Hashtable<K,V>
          */
         int h = 0;
         if (count == 0 || loadFactor < 0)
-            return h;  // Returns zero
+            return h;  // Returns zero			//当hashtable的size为零或者装载因子为负数时，则返回零
 
         loadFactor = -loadFactor;  // Mark hashCode computation in progress
         Entry[] tab = table;
