@@ -87,7 +87,7 @@ package java.util;
  * @since 1.2
  */
 
-public interface List<E> extends Collection<E> {
+public interface List<E> extends Collection<E> {            //list接口实现
     // Query Operations
 
     /**
