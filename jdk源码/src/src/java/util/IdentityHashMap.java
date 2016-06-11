@@ -115,7 +115,8 @@ import java.io.*;
 
 public class IdentityHashMap<K,V>
     extends AbstractMap<K,V>
-    implements Map<K,V>, java.io.Serializable, Cloneable
+    implements Map<K,V>, java.io.Serializable, Cloneable		//IdentityHashMap判断两个键值k1和 k2相等的条件是 k1 == k2 
+    									//IdentityHashMap主要是用于key值的重复使用
 {
     /**
      * The initial capacity used by the no-args constructor.
