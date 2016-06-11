@@ -37,8 +37,14 @@ import sun.misc.Unsafe;
  * @since   1.0
  */
 public
-class Random implements java.io.Serializable {
-    /** use serialVersionUID from JDK 1.1 for interoperability */
+class Random implements java.io.Serializable {				//产生随机数
+/*
+Random random = new Random();//默认构造方法
+Random random = new Random(1000);//指定种子数字
+在进行随机时，随机算法的起源数字称为种子数(seed)，在种子数的基础上进行一定的变换，从而产生需要的随机数字。
+相同种子数的Random对象，相同次数生成的随机数字是完全相同的。也就是说，两个种子数相同的Random对象，第一次生成的随机数字完全相同，第二次生成的随机数字也完全相同。
+ */
+ /** use serialVersionUID from JDK 1.1 for interoperability */
     static final long serialVersionUID = 3905348978240129619L;
 
     /**
