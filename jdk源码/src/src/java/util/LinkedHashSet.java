@@ -133,7 +133,7 @@ public class LinkedHashSet<E>
      * Constructs a new, empty linked hash set with the default initial
      * capacity (16) and load factor (0.75).
      */
-    public LinkedHashSet() {
+    public LinkedHashSet() {        //初始大小为16，默认的装载因子为0.75
         super(16, .75f, true);
     }
 
@@ -147,8 +147,8 @@ public class LinkedHashSet<E>
      *           this set
      * @throws NullPointerException if the specified collection is null
      */
-    public LinkedHashSet(Collection<? extends E> c) {
-        super(Math.max(2*c.size(), 11), .75f, true);
-        addAll(c);
+    public LinkedHashSet(Collection<? extends E> c) {       //使用现有的集合来创建LinkedHashset，调用Hashset方法
+        super(Math.max(2*c.size(), 11), .75f, true);        //根据大小判断是否需要扩容，创建新的hashset
+        addAll(c);      //将集合中的元素全部添加进去
     }
 }
