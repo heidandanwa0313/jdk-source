@@ -146,7 +146,7 @@ import sun.util.resources.OpenListResourceBundle;
  * @since       1.1
  */
 
-public final class Locale implements Cloneable, Serializable {
+public final class Locale implements Cloneable, Serializable {	//软件的本地化时使用，作为一个参数辅助其他方法完成输出的本地化。					
 
     // cache to store singleton Locales
     private final static ConcurrentHashMap<String, Locale> cache =
