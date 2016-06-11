@@ -1803,8 +1803,8 @@ import sun.misc.FormattedFloatingDecimal;
  * @since 1.5
  */
 public final class Formatter implements Closeable, Flushable {
-    private Appendable a;
-    private Locale l;
+    private Appendable a;		//可追加的对象，如StringBuilder
+    private Locale l;			//区域信息
 
     private IOException lastException;
 
@@ -1949,10 +1949,10 @@ public final class Formatter implements Closeable, Flushable {
      * @throws  UnsupportedEncodingException
      *          If the named charset is not supported
      */
-    public Formatter(String fileName, String csn)
+    public Formatter(String fileName, String csn)		//csn为编码方式
 	throws FileNotFoundException, UnsupportedEncodingException
     {
-	this(fileName, csn, Locale.getDefault());
+	this(fileName, csn, Locale.getDefault());		//下面有定义和实现
     }
 
     /**
@@ -2116,7 +2116,7 @@ public final class Formatter implements Closeable, Flushable {
      * @param  ps
      *         The stream to use as the destination of this formatter.
      */
-    public Formatter(PrintStream ps) {
+    public Formatter(PrintStream ps) {			//将printStream转换为appendable
 	if (ps == null)
 	    throw new NullPointerException();
 	init((Appendable)ps, Locale.getDefault());
@@ -2225,8 +2225,8 @@ public final class Formatter implements Closeable, Flushable {
      *          If this formatter has been closed by invoking its {@link
      *          #close()} method
      */
-    public Appendable out() {
-	ensureOpen();
+    public Appendable out() {		
+	ensureOpen();				//下面有具体的实现和声明
 	return a;
     }
 
@@ -2292,7 +2292,7 @@ public final class Formatter implements Closeable, Flushable {
      * Closes this formatter.  If the destination implements the {@link
      * java.io.Closeable} interface, its <tt>close</tt> method will be invoked.
      *
-     * <p> Closing a formatter allows it to release resources it may be holding
+     * <p> Closing ` formatter allows it to release resources it may be holding
      * (such as open files).  If the formatter is already closed, then invoking
      * this method has no effect.
      *
@@ -2363,7 +2363,7 @@ public final class Formatter implements Closeable, Flushable {
      *
      * @return  This formatter
      */
-    public Formatter format(String format, Object ... args) {
+    public Formatter format(String format, Object ... args) {		//...表至少一个参数
 	return format(l, format, args);
     }
 
@@ -3636,13 +3636,13 @@ public final class Formatter implements Closeable, Flushable {
 		return toCharArray(sb);
 	    }
 
-	    public char[] mantissa() {
+	    public char[] mantissa() {			//尾数
 		return toCharArray(mant);
 	    }
 
 	    // The exponent will be formatted as a sign ('+' or '-') followed
 	    // by the exponent zero-padded to include at least two digits.
-	    public char[] exponent() {
+	    public char[] exponent() {			//指数
 		return toCharArray(exp);
 	    }
 
