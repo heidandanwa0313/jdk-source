@@ -98,7 +98,7 @@ public interface SortedSet<E> extends Set<E> {
      *         or <tt>null</tt> if this set uses the natural ordering
      *         of its elements
      */
-    Comparator<? super E> comparator();
+    Comparator<? super E> comparator();             //向下通配符
 
     /**
      * Returns a view of the portion of this set whose elements range
@@ -158,7 +158,7 @@ public interface SortedSet<E> extends Set<E> {
      *         restricted range, and <tt>toElement</tt> lies outside the
      *         bounds of the range
      */
-    SortedSet<E> headSet(E toElement);
+    SortedSet<E> headSet(E toElement);      //小于该元素的Set
 
     /**
      * Returns a view of the portion of this set whose elements are
