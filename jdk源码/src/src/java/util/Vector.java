@@ -143,7 +143,7 @@ public class Vector<E>
      * @throws NullPointerException if the specified collection is null
      * @since   1.2
      */
-    public Vector(Collection<? extends E> c) {
+    public Vector(Collection<? extends E> c) {			//将集合转化为Vector
 	elementData = c.toArray();
 	elementCount = elementData.length;
 	// c.toArray might (incorrectly) not return Object[] (see 6260652)
@@ -164,7 +164,7 @@ public class Vector<E>
      *         a runtime type that can be stored in the specified array
      * @see #toArray(Object[])
      */
-    public synchronized void copyInto(Object[] anArray) {
+    public synchronized void copyInto(Object[] anArray) {		//将Vector中的元素保存到数组中
 	System.arraycopy(elementData, 0, anArray, 0, elementCount);
     }
 
@@ -176,7 +176,7 @@ public class Vector<E>
      * with a smaller one. An application can use this operation to
      * minimize the storage of a vector.
      */
-    public synchronized void trimToSize() {
+    public synchronized void trimToSize() {		//将Vector大小设置为真实使用大小
 	modCount++;
 	int oldCapacity = elementData.length;
 	if (elementCount < oldCapacity) {
@@ -236,7 +236,7 @@ public class Vector<E>
      * @param  newSize   the new size of this vector
      * @throws ArrayIndexOutOfBoundsException if the new size is negative
      */
-    public synchronized void setSize(int newSize) {
+    public synchronized void setSize(int newSize) {		//设置Vector的大小
 	modCount++;
 	if (newSize > elementCount) {
 	    ensureCapacityHelper(newSize);
@@ -288,7 +288,7 @@ public class Vector<E>
      * @return  an enumeration of the components of this vector
      * @see     Iterator
      */
-    public Enumeration<E> elements() {
+    public Enumeration<E> elements() {		//返回所有元素的枚举对象
 	return new Enumeration<E>() {
 	    int count = 0;
 
@@ -422,7 +422,7 @@ public class Vector<E>
      * @throws ArrayIndexOutOfBoundsException if the index is out of range
      *	       ({@code index < 0 || index >= size()})
      */
-    public synchronized E elementAt(int index) {
+    public synchronized E elementAt(int index) {		//返回该索引位置的元素
 	if (index >= elementCount) {
 	    throw new ArrayIndexOutOfBoundsException(index + " >= " + elementCount);
 	}
@@ -478,7 +478,7 @@ public class Vector<E>
      * @throws ArrayIndexOutOfBoundsException if the index is out of range
      *	       ({@code index < 0 || index >= size()})
      */
-    public synchronized void setElementAt(E obj, int index) {
+    public synchronized void setElementAt(E obj, int index) {		//修改元素
 	if (index >= elementCount) {
 	    throw new ArrayIndexOutOfBoundsException(index + " >= " +
 						     elementCount);
@@ -725,7 +725,7 @@ public class Vector<E>
      */
     public synchronized boolean add(E e) {
 	modCount++;
-	ensureCapacityHelper(elementCount + 1);
+	ensureCapacityHelper(elementCount + 1);			//调整大小
 	elementData[elementCount++] = e;
         return true;
     }
