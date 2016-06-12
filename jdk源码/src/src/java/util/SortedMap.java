@@ -92,7 +92,7 @@ package java.util;
  * @since 1.2
  */
 
-public interface SortedMap<K,V> extends Map<K,V> {
+public interface SortedMap<K,V> extends Map<K,V> {      //排序的Map
     /**
      * Returns the comparator used to order the keys in this map, or
      * <tt>null</tt> if this map uses the {@linkplain Comparable
@@ -102,7 +102,7 @@ public interface SortedMap<K,V> extends Map<K,V> {
      *         or <tt>null</tt> if this map uses the natural ordering
      *         of its keys
      */
-    Comparator<? super K> comparator();
+    Comparator<? super K> comparator();         //实现compare方法
 
     /**
      * Returns a view of the portion of this map whose keys range from
@@ -133,7 +133,7 @@ public interface SortedMap<K,V> extends Map<K,V> {
      *         range, and <tt>fromKey</tt> or <tt>toKey</tt> lies
      *         outside the bounds of the range
      */
-    SortedMap<K,V> subMap(K fromKey, K toKey);
+    SortedMap<K,V> subMap(K fromKey, K toKey);          //子Map实现
 
     /**
      * Returns a view of the portion of this map whose keys are
@@ -160,7 +160,7 @@ public interface SortedMap<K,V> extends Map<K,V> {
      *         restricted range, and <tt>toKey</tt> lies outside the
      *         bounds of the range
      */
-    SortedMap<K,V> headMap(K toKey);
+    SortedMap<K,V> headMap(K toKey);        //key小于tokey的sortedMap
 
     /**
      * Returns a view of the portion of this map whose keys are
@@ -187,7 +187,7 @@ public interface SortedMap<K,V> extends Map<K,V> {
      *         restricted range, and <tt>fromKey</tt> lies outside the
      *         bounds of the range
      */
-    SortedMap<K,V> tailMap(K fromKey);
+    SortedMap<K,V> tailMap(K fromKey);      //大于等于fromKey的sortedMap
 
     /**
      * Returns the first (lowest) key currently in this map.
