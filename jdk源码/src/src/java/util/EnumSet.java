@@ -61,7 +61,7 @@ import sun.misc.SharedSecrets;
  * @serial exclude
  */
 public abstract class EnumSet<E extends Enum<E>> extends AbstractSet<E>
-    implements Cloneable, java.io.Serializable
+    implements Cloneable, java.io.Serializable				//枚举类的Set类
 {
     /**
      * The class of all the elements of this set.
