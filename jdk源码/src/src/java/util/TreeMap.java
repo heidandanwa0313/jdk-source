@@ -294,7 +294,7 @@ public class TreeMap<K,V>
 		++modCount;
 		try {
 		    buildFromSorted(mapSize, map.entrySet().iterator(),
-				    null, null);
+				    null, null);				//不懂
 		} catch (java.io.IOException cannotHappen) {
 		} catch (ClassNotFoundException cannotHappen) {
 		}
