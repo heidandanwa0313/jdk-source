@@ -325,7 +325,7 @@ import sun.misc.LRUCache;
  * @version 1.27, 06/28/06 
  * @since   1.5
  */
-public final class Scanner implements Iterator<String> {
+public final class Scanner implements Iterator<String> {			//输入buffer
 
     // Internal buffer used to hold input
     private CharBuffer buf;
