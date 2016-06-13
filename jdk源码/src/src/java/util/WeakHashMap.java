@@ -269,7 +269,7 @@ public class WeakHashMap<K,V>
     /**
      * Expunges stale entries from the table.
      */
-    private void expungeStaleEntries() {
+    private void expungeStaleEntries() {		//去除重复的
 	Entry<K,V> e;
         while ( (e = (Entry<K,V>) queue.poll()) != null) {
             int h = e.hash;
