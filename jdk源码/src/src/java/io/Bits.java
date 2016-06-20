@@ -11,7 +11,7 @@ package java.io;
  * Utility methods for packing/unpacking primitive values in/out of byte arrays
  * using big-endian byte ordering.
  */
- //该类提供了bit与进制及基本类型间的转换
+ //该类提供了bit与进制及基本类型间的相互转换
 class Bits {
 
     /*
