@@ -113,7 +113,7 @@ package java.util;
  * @author Doug Lea
  * @param <E> the type of elements held in this collection
  */
-public interface Queue<E> extends Collection<E> {
+public interface Queue<E> extends Collection<E> {           //队列的接口，定义了一些接口
     /**
      * Inserts the specified element into this queue if it is possible to do so
      * immediately without violating capacity restrictions, returning

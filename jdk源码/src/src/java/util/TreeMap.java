@@ -122,7 +122,7 @@ public class TreeMap<K,V>
      * <tt>ClassCastException</tt>.
      */
     public TreeMap() {
-        comparator = null;
+        comparator = null;			//使用自然顺序
     }
 
     /**
@@ -172,7 +172,7 @@ public class TreeMap<K,V>
      * @throws NullPointerException if the specified map is null
      */
     public TreeMap(SortedMap<K, ? extends V> m) {
-        comparator = m.comparator();
+        comparator = m.comparator();			//使用参数中的排序规则
         try {
             buildFromSorted(m.size(), m.entrySet().iterator(), null, null);
         } catch (java.io.IOException cannotHappen) {
@@ -294,7 +294,7 @@ public class TreeMap<K,V>
 		++modCount;
 		try {
 		    buildFromSorted(mapSize, map.entrySet().iterator(),
-				    null, null);
+				    null, null);				//不懂
 		} catch (java.io.IOException cannotHappen) {
 		} catch (ClassNotFoundException cannotHappen) {
 		}

@@ -65,7 +65,7 @@ package java.util;
  * @since 1.2
  */
 
-public interface Set<E> extends Collection<E> {
+public interface Set<E> extends Collection<E> {             //Set接口实现
     // Query Operations
 
     /**

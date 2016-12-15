@@ -41,7 +41,7 @@ package java.util;
  * @see List#listIterator()
  * @since   1.2
  */
-public interface ListIterator<E> extends Iterator<E> {
+public interface ListIterator<E> extends Iterator<E> {                  //该接口定义了一些Iterator的相关方法
     // Query Operations
 
     /**
